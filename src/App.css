@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+	font-family: "Poppins", sans-serif;
+}
+
+/* width */
+::-webkit-scrollbar {
+	width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: #3b83f634;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #3b83f6;
+	border-radius: 100px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
+
+button:active {
+	transform: scale(0.9);
+	opacity: 0.8;
+	transition: all 0.2s;
+}
+
+body {
+	background: linear-gradient(
+			to bottom,
+			rgb(255, 255, 255, 0.698),
+			rgba(255, 255, 255, 0.998),
+			rgba(255, 255, 255, 0.996),
+			rgba(255, 255, 255, 0.996),
+			rgba(255, 255, 255, 0.996),
+			rgba(255, 255, 255, 0.098)
+		),
+		url("/images/background/paper-texture.jpg");
+	background-size: contain;
+}
+.main-wrapper {
+	width: 100%;
+}
