@@ -47,6 +47,7 @@ body {
 		),
 		url("/images/background/paper-texture.jpg");
 	background-size: contain;
+	min-height: 100vh;
 }
 .main-wrapper {
 	width: 100%;
