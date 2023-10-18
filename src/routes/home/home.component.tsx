@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Pagination from "../../components/pagination/pagination.component";
-import PeopleListsLoader from "../../components/people-lists/people-lists.loader";
-import PeopleLists from "../../components/people-lists/people-lists.component";
+import PeopleListsLoader from "../../components/people-lists/people-lists-loader/people-lists.loader";
+import PeopleLists from "../../components/people-lists/people-lists/people-lists.component";
 import { PeopleContext } from "../../services/userAPI/user.context";
+import PeopleListsError from "../../components/people-lists/people-lists-error/people-lists-error.compoent";
 
 const Home = () => {
-	const { isLoading, LoadAndFetch, getPeopleLists } = useContext(PeopleContext);
+	const { isLoading, LoadAndFetch, getPeopleLists, error } = useContext(PeopleContext);
 	const { page } = useParams();
 
 	const [mounted, setMounted] = useState(false);
@@ -28,14 +29,15 @@ const Home = () => {
 					<div className="flex items-center gap-2 max-md:mb-2">
 						<h2 className="text-2xl dark:text-white">Browse People</h2>
 					</div>
-					<Pagination />
+					{!error && <Pagination />}
 				</div>
-
+				{error && <PeopleListsError />}
 				{isLoading ? <PeopleListsLoader /> : <PeopleLists />}
-
-				<div className="hidden max-sm:block mt-5">
-					<Pagination />
-				</div>
+				{!error && (
+					<div className="hidden max-sm:block mt-5">
+						<Pagination />
+					</div>
+				)}
 			</div>
 		</>
 	);

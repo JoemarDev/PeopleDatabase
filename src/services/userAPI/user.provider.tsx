@@ -8,12 +8,13 @@ interface PeopleProviderProps {
 }
 
 export interface ContextValue {
+	error: boolean;
 	isLoading: boolean;
 	peopleState: UserState[];
 	savedProfile: UserState[];
 	profileBin: UserState[];
 	page: number;
-	getPeopleLists: (value: number) => Promise<UserState[]>;
+	getPeopleLists: (value: number) => Promise<UserState[] | void>;
 	savePeopleProfile: (value: UserState) => void;
 	unSavedProfile: (value: UserState) => void;
 	LoadAndFetch: (value: number) => void;
@@ -24,10 +25,11 @@ export interface ContextValue {
 }
 
 interface PeopleListsResponse {
-	results: UserState[];
+	results: UserState[] | { error: string };
 }
 
 export const PeopleProvider = ({ children }: PeopleProviderProps) => {
+	const [error, setError] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [peopleState, setPeopleState] = useState<Array<UserState>>([]);
 	const [savedProfile, setSavedProfile] = useState<Array<UserState>>([]);
@@ -41,15 +43,6 @@ export const PeopleProvider = ({ children }: PeopleProviderProps) => {
 
 		// Destructure the name property from the profile object
 		const { name: x } = profile;
-
-		// Filter the savedProfile array based on the first and last names
-		const filteredSavedProfile = savedProfile.filter(({ name: y }) => y.first !== x.first && y.last !== x.last);
-
-		// Add the restored profile to the filteredSavedProfile array
-		filteredSavedProfile.push(profile);
-
-		// Update the savedProfile state with the filteredSavedProfile array
-		setSavedProfile(filteredSavedProfile);
 
 		// Save the restored profile to the people profile storage
 		savePeopleProfile(profile);
@@ -151,26 +144,41 @@ export const PeopleProvider = ({ children }: PeopleProviderProps) => {
 		// Clear the existing people state and set isLoading to true
 		setPeopleState([]);
 		setIsLoading(true);
+		setError(false);
 
-		// Make an API call to fetch the people lists
-		const response = await axios.get<PeopleListsResponse>(
-			`https://randomuser.me/api/?page=${page}&results=9&seed=abc`,
-		);
-		const { results } = response.data;
+		try {
+			// Make an API call to fetch the people lists
+			const response = await axios.get<PeopleListsResponse>(
+				`https://randomuser.me/api/?page=${page}&results=9&seed=abc`,
+			);
 
-		// Prepare the fetched data
-		const dataPrep = prepareData(results);
+			const { results } = response.data;
 
-		// Update the people state with the prepared data and finish the loading
-		setPeopleState(dataPrep);
-		setIsLoading(false);
-		setPage(page);
+			// Handler API Down Server
+			if ("error" in results) {
+				setIsLoading(false);
+				setError(true);
+				return;
+			}
 
-		// Check if there is any saved profile and update the state accordingly
-		checkSavedProfile(savedProfile, dataPrep);
+			// Prepare the fetched data
+			const dataPrep = prepareData(results);
 
-		// Return the prepared data
-		return dataPrep;
+			// Update the people state with the prepared data and finish the loading
+			setPeopleState(dataPrep);
+			setIsLoading(false);
+			setPage(page);
+
+			// Check if there is any saved profile and update the state accordingly
+			checkSavedProfile(savedProfile, dataPrep);
+
+			// Return the prepared data
+			return dataPrep;
+		} catch (error) {
+			setIsLoading(false);
+			setError(true);
+			return;
+		}
 	};
 
 	const loadSavedProfile = (): UserState[] => {
@@ -195,14 +203,18 @@ export const PeopleProvider = ({ children }: PeopleProviderProps) => {
 		// Set the isSaved property of the profile to true
 		profile.isSaved = true;
 
+		// Look for dupliate profile and remove it
+		const { name: x } = profile;
+		const filteredData = parsedData.filter(({ name: y }) => y.first !== x.first && y.last !== x.last);
+
 		// Add the profile to the parsed data array
-		parsedData.push(profile);
+		filteredData.push(profile);
 
 		// Save the updated parsed data back to local storage
-		window.localStorage.setItem("profiles", JSON.stringify(parsedData));
+		window.localStorage.setItem("profiles", JSON.stringify(filteredData));
 
 		// Update the state with the saved profiles
-		setSavedProfile(parsedData);
+		setSavedProfile(filteredData);
 	};
 
 	const unSavedProfile = (profile: UserState) => {
@@ -262,8 +274,10 @@ export const PeopleProvider = ({ children }: PeopleProviderProps) => {
 		// Set the saved profile state
 		setSavedProfile(parsedData);
 
-		// Check and update the saved status for each fetched profile
-		checkSavedProfile(parsedData, fetchResults);
+		if (fetchResults) {
+			// Check and update the saved status for each fetched profile
+			checkSavedProfile(parsedData, fetchResults);
+		}
 	};
 
 	const loadLocalProfile = () => {
@@ -303,6 +317,7 @@ export const PeopleProvider = ({ children }: PeopleProviderProps) => {
 	}, [savedProfile]);
 
 	const contextValue: ContextValue = {
+		error,
 		isLoading,
 		savedProfile,
 		peopleState,

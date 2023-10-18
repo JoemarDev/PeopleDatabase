@@ -1,4 +1,4 @@
-import ProfileCardSkeleton from "../user/profile-card-skeleton/profile-card-skeleton.component";
+import ProfileCardSkeleton from "../../user/profile-card-skeleton/profile-card-skeleton.component";
 
 const PeopleListsLoader = () => {
 	return (

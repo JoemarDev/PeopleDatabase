@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import ProfileCard from "../user/profile-card/profile-card.component";
-import { PeopleContext } from "../../services/userAPI/user.context";
+import ProfileCard from "../../user/profile-card/profile-card.component";
+import { PeopleContext } from "../../../services/userAPI/user.context";
 
 const PeopleLists = () => {
 	const { peopleState } = useContext(PeopleContext);

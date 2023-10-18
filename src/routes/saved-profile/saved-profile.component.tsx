@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { PeopleContext } from "../../services/userAPI/user.context";
 
-import PeopleListsLoader from "../../components/people-lists/people-lists.loader";
+import PeopleListsLoader from "../../components/people-lists/people-lists-loader/people-lists.loader";
 import SavePeopleLists from "../../components/saved-people-lists/saved-people-lists.component";
 
 const SavedProfile = () => {

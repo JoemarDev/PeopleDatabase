@@ -3,6 +3,7 @@ import { ContextValue } from "./user.provider";
 import { UserState } from "../../utils/types/user/User.type";
 
 export const PeopleContext = createContext<ContextValue>({
+	error: false,
 	isLoading: true,
 	peopleState: [],
 	savedProfile: [],
