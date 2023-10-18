@@ -1,3 +1,9 @@
+![alt text](https://people-database-one.vercel.app/images/brand/logo.png)
+
+# Screen Shot of the project
+
+![alt text](https://people-database-one.vercel.app/images/screenshot.png)
+
 # People Database
 
 Welcome to the README file!

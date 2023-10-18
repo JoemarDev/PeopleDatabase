@@ -1,12 +1,13 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { UserState } from "../../utils/types/user/User.type";
 import axios from "axios";
+import { PeopleContext } from "./user.context";
 
 interface PeopleProviderProps {
 	children: ReactNode;
 }
 
-interface ContextValue {
+export interface ContextValue {
 	isLoading: boolean;
 	peopleState: UserState[];
 	savedProfile: UserState[];
@@ -16,23 +17,12 @@ interface ContextValue {
 	savePeopleProfile: (value: UserState) => void;
 	unSavedProfile: (value: UserState) => void;
 	LoadAndFetch: (value: number) => void;
+	loadLocalProfile: () => void;
 }
 
 interface PeopleListsResponse {
 	results: UserState[];
 }
-
-export const PeopleContext = createContext<ContextValue>({
-	isLoading: true,
-	peopleState: [],
-	savedProfile: [],
-	page: 1,
-	getPeopleLists: async () => [] as UserState[],
-	updatePage: () => {},
-	savePeopleProfile: () => {},
-	unSavedProfile: () => {},
-	LoadAndFetch: () => {},
-});
 
 export const PeopleProvider = ({ children }: PeopleProviderProps) => {
 	const [isLoading, setIsLoading] = useState(false);
@@ -42,6 +32,40 @@ export const PeopleProvider = ({ children }: PeopleProviderProps) => {
 
 	const updatePage = (value: number) => setPage(value);
 
+	const prepareData = (dirtyData: UserState[]) => {
+		const dataPrep = [];
+
+		for (let x = 0; x < dirtyData.length; x++) {
+			if ("login" in dirtyData[x]) {
+				const { gender, name, location, email, dob, registered, phone, cell, picture } = dirtyData[x];
+
+				const locationPrep = {
+					street: location.street,
+					city: location.city,
+					state: location.state,
+					country: location.country,
+				};
+
+				const prep = {
+					gender: gender,
+					name: name,
+					location: locationPrep,
+					email: email,
+					dob: dob,
+					registered: registered,
+					phone: phone,
+					cell: cell,
+					picture: { large: picture.large },
+					isSaved: false,
+				};
+
+				dataPrep.push(prep);
+			}
+		}
+
+		return dataPrep;
+	};
+
 	const getPeopleLists = async (page = 1) => {
 		setPeopleState([]);
 		setIsLoading(true);
@@ -49,11 +73,14 @@ export const PeopleProvider = ({ children }: PeopleProviderProps) => {
 			`https://randomuser.me/api/?page=${page}&results=9&seed=abc`,
 		);
 		const { results } = response.data;
-		setPeopleState(results);
+
+		const dataPrep = prepareData(results);
+
+		setPeopleState(dataPrep);
 		setIsLoading(false);
 		setPage(page);
-		checkSavedProfile(savedProfile, results);
-		return results;
+		checkSavedProfile(savedProfile, dataPrep);
+		return dataPrep;
 	};
 
 	const loadSavedProfile = (): UserState[] => {
@@ -104,6 +131,11 @@ export const PeopleProvider = ({ children }: PeopleProviderProps) => {
 		checkSavedProfile(parsedData, fetchResults);
 	};
 
+	const loadLocalProfile = () => {
+		const parsedData: UserState[] = loadSavedProfile();
+		setSavedProfile(parsedData);
+	};
+
 	useEffect(() => {
 		checkSavedProfile(savedProfile, peopleState);
 	}, [savedProfile]);
@@ -118,6 +150,7 @@ export const PeopleProvider = ({ children }: PeopleProviderProps) => {
 		savePeopleProfile,
 		unSavedProfile,
 		LoadAndFetch,
+		loadLocalProfile,
 	};
 
 	return <PeopleContext.Provider value={contextValue}>{children}</PeopleContext.Provider>;

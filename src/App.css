@@ -36,6 +36,11 @@ button:active {
 }
 
 body {
+	border: none;
+	min-height: 100vh;
+}
+
+.main-theme {
 	background: linear-gradient(
 			to bottom,
 			rgb(255, 255, 255, 0.698),
@@ -47,8 +52,22 @@ body {
 		),
 		url("/images/background/paper-texture.jpg");
 	background-size: contain;
-	min-height: 100vh;
 }
+
+@layer utilities {
+	.dark-theme {
+		background: linear-gradient(
+				to bottom,
+				rgb(2 32 51 / 100%),
+				rgb(2 32 51 / 90%),
+				rgb(2 32 51 / 85%),
+				rgb(2 32 51 / 90%),
+				rgb(2 32 51 / 100%)
+			),
+			url("/images/background/paper-texture.jpg") !important;
+	}
+}
+
 .main-wrapper {
 	width: 100%;
 }

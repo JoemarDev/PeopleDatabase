@@ -4,10 +4,10 @@ const ProfileBasicInformation: React.FC<{ name: PersonalInformation }> = ({ name
 	const { title, first, last } = name;
 
 	return (
-		<div className="h-14 border-b mb-4">
+		<div className="h-14 max-md:h-auto border-b mb-4 dark:border-blue-400">
 			<div className="flex items-center just"></div>
 			<p className="text-gray-500 text-sm">{title}</p>
-			<h2 className="text-xl font-semibold text-blue-500">
+			<h2 className="text-xl font-semibold text-blue-500 max-sm:w-32">
 				{first} {last}
 			</h2>
 		</div>

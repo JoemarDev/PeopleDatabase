@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { PeopleContext } from "../../services/userAPI/user.service";
 import Pagination from "../../components/pagination/pagination.component";
 import PeopleListsLoader from "../../components/people-lists/people-lists.loader";
 import PeopleLists from "../../components/people-lists/people-lists.component";
+import { PeopleContext } from "../../services/userAPI/user.context";
 
 const Home = () => {
 	const { isLoading, LoadAndFetch, getPeopleLists } = useContext(PeopleContext);
@@ -24,14 +24,18 @@ const Home = () => {
 	return (
 		<>
 			<div className="main-wrapper">
-				<div className="flex items-center justify-between mb-5">
-					<div className="flex items-center gap-2">
-						<h2 className="text-2xl">Browse People</h2>
+				<div className="flex items-center justify-between mb-5 max-md:block">
+					<div className="flex items-center gap-2 max-md:mb-2">
+						<h2 className="text-2xl dark:text-white">Browse People</h2>
 					</div>
 					<Pagination />
 				</div>
 
 				{isLoading ? <PeopleListsLoader /> : <PeopleLists />}
+
+				<div className="hidden max-sm:block mt-5">
+					<Pagination />
+				</div>
 			</div>
 		</>
 	);

@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
-import HomeTitle from "../../components/home-title/home-title.component";
+import NavigationBar from "../../components/navigation/navigation-bar/navigation-bar.component";
 
 const Navigation = () => {
 	return (
 		<>
 			<div className="container mx-auto p-5 ">
-				<HomeTitle />
+				<NavigationBar />
 				<Outlet />
 			</div>
 		</>

@@ -10,7 +10,7 @@ const ProfileContactInformation: React.FC<{ info: ContactInformation }> = ({ inf
 	const { email, phone, cell } = info;
 	return (
 		<>
-			<div className="grid grid-cols-11 gap-1 items-center gap-y-3">
+			<div className="grid grid-cols-11 gap-1 items-center gap-y-3 dark:text-white">
 				<div className="col-span-1">
 					<img
 						className="w-5"
@@ -19,7 +19,11 @@ const ProfileContactInformation: React.FC<{ info: ContactInformation }> = ({ inf
 					/>
 				</div>
 				<div className="col-span-10">
-					<p className="text-sm">{email}</p>
+					<p
+						className="text-sm truncate "
+						title={email}>
+						{email}
+					</p>
 				</div>
 				<div className="col-span-1">
 					<img
