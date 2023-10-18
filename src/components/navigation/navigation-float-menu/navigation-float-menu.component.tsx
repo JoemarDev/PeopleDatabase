@@ -4,7 +4,11 @@ import { Link } from "react-router-dom";
 import NavigationThemeOption from "../navigation-theme-option/navigation-theme-option.component";
 import { PeopleContext } from "../../../services/userAPI/user.context";
 
-const NavigationFloatMenu: React.FC<{ close: () => void }> = ({ close }) => {
+interface NavigationFloatMenuProps {
+	close: () => void;
+}
+
+const NavigationFloatMenu: React.FC<NavigationFloatMenuProps> = ({ close }) => {
 	const { savedProfile } = useContext(PeopleContext);
 
 	return (
@@ -29,7 +33,11 @@ const NavigationFloatMenu: React.FC<{ close: () => void }> = ({ close }) => {
 							)}
 						</Link>
 					</li>
-					<li>Profile Bin</li>
+					<li>
+						<Link to={"/profile-bin"}>
+							<span>Profile Bin</span>
+						</Link>
+					</li>
 					<li className="hover:!no-underline">
 						<NavigationThemeOption />
 					</li>

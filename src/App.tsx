@@ -6,6 +6,7 @@ import SavedProfile from "./routes/saved-profile/saved-profile.component";
 
 import "./App.css";
 import "react-loading-skeleton/dist/skeleton.css";
+import ProfileBin from "./routes/profile-bin/profile-bin.component";
 
 const App = () => {
 	const theme = localStorage.getItem("theme");
@@ -31,6 +32,10 @@ const App = () => {
 					<Route
 						path="/saved"
 						element={<SavedProfile />}
+					/>
+					<Route
+						path="/profile-bin"
+						element={<ProfileBin />}
 					/>
 				</Route>
 			</Routes>

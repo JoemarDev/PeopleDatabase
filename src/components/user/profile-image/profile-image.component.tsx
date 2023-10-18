@@ -1,6 +1,9 @@
 import { Picture } from "../../../utils/types/user/User.type";
 
-const ProfileImage: React.FC<{ image: Picture }> = ({ image }) => {
+interface ProfileImageProps {
+	image: Picture;
+}
+const ProfileImage: React.FC<ProfileImageProps> = ({ image }) => {
 	const { large } = image;
 	return (
 		<img

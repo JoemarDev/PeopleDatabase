@@ -1,11 +1,13 @@
 import { FormatDate } from "../../../utils/others/date-formatter.utils";
 import { DateOfBirth, Location, Registered } from "../../../utils/types/user/User.type";
 
-const MainProfileBasicInfo: React.FC<{ dob: DateOfBirth; registered: Registered; location: Location }> = ({
-	dob,
-	registered,
-	location,
-}) => {
+interface MainProfileBasicInfoProps {
+	dob: DateOfBirth;
+	registered: Registered;
+	location: Location;
+}
+
+const MainProfileBasicInfo: React.FC<MainProfileBasicInfoProps> = ({ dob, registered, location }) => {
 	const { date, age } = registered;
 	const { date: birthday, age: userAge } = dob;
 	const { street, city, country, state } = location;

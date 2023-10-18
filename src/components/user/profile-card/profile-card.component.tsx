@@ -8,7 +8,10 @@ import ProfileImage from "../profile-image/profile-image.component";
 import ProfileSavedIcon from "../profile-saved-icon/profile-saved-icon.component";
 import Profile from "../../main-profile/main-profile/main-profile.component";
 
-const ProfileCard: React.FC<{ info: UserState }> = ({ info }) => {
+interface ProfileCardProps {
+	info: UserState;
+}
+const ProfileCard: React.FC<ProfileCardProps> = ({ info }) => {
 	const { name, picture, email, phone, cell, gender, isSaved } = info;
 
 	const [isProfileOpen, setProfileOpen] = useState(false);

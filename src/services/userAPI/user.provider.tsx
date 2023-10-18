@@ -11,13 +11,16 @@ export interface ContextValue {
 	isLoading: boolean;
 	peopleState: UserState[];
 	savedProfile: UserState[];
+	profileBin: UserState[];
 	page: number;
 	getPeopleLists: (value: number) => Promise<UserState[]>;
-	updatePage: (value: number) => void;
 	savePeopleProfile: (value: UserState) => void;
 	unSavedProfile: (value: UserState) => void;
 	LoadAndFetch: (value: number) => void;
 	loadLocalProfile: () => void;
+	removeFromProfileBin: (value: UserState) => void;
+	restoreDeletedProfile: (value: UserState) => void;
+	loadProfileBinStorage: () => void;
 }
 
 interface PeopleListsResponse {
@@ -28,9 +31,41 @@ export const PeopleProvider = ({ children }: PeopleProviderProps) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [peopleState, setPeopleState] = useState<Array<UserState>>([]);
 	const [savedProfile, setSavedProfile] = useState<Array<UserState>>([]);
+	const [profileBin, setProfileBin] = useState<Array<UserState>>([]);
 	const [page, setPage] = useState(1);
 
-	const updatePage = (value: number) => setPage(value);
+	const restoreDeletedProfile = (profile: UserState) => {
+		profile.expiration = null;
+		profile.isSaved = true;
+		const { name: x } = profile;
+
+		const filteredSavedProfile = savedProfile.filter(({ name: y }) => y.first !== x.first && y.last !== x.last);
+		filteredSavedProfile.push(profile);
+		setSavedProfile(filteredSavedProfile);
+		savePeopleProfile(profile);
+
+		const filteredBin = profileBin.filter(({ name: y }) => y.first !== x.first && y.last !== x.last);
+		setProfileBin(filteredBin);
+		window.localStorage.setItem("profileBin", JSON.stringify(filteredBin));
+	};
+
+	const processProfileBin = (profile: UserState) => {
+		const currentTime = new Date();
+		const expirationTime = new Date(currentTime.getTime() + 5 * 60000);
+		profile.expiration = expirationTime;
+		const { name: x } = profile;
+		const filteredBin = profileBin.filter(({ name: y }) => y.first !== x.first && y.last !== x.last);
+		filteredBin.push(profile);
+		setProfileBin(filteredBin);
+		window.localStorage.setItem("profileBin", JSON.stringify(filteredBin));
+	};
+
+	const removeFromProfileBin = (profile: UserState) => {
+		const { name: x } = profile;
+		const filteredBin = profileBin.filter(({ name: y }) => y.first !== x.first && y.last !== x.last);
+		setProfileBin(filteredBin);
+		window.localStorage.setItem("profileBin", JSON.stringify(filteredBin));
+	};
 
 	const prepareData = (dirtyData: UserState[]) => {
 		const dataPrep = [];
@@ -57,6 +92,7 @@ export const PeopleProvider = ({ children }: PeopleProviderProps) => {
 					cell: cell,
 					picture: { large: picture.large },
 					isSaved: false,
+					expiration: null,
 				};
 
 				dataPrep.push(prep);
@@ -108,6 +144,7 @@ export const PeopleProvider = ({ children }: PeopleProviderProps) => {
 		window.localStorage.setItem("profiles", JSON.stringify(parsedData));
 		setSavedProfile(parsedData);
 		checkSavedProfile(parsedData, peopleState);
+		processProfileBin(profile);
 	};
 
 	const checkSavedProfile = (savedProfileData: UserState[], fetchProfile: UserState[]) => {
@@ -136,6 +173,13 @@ export const PeopleProvider = ({ children }: PeopleProviderProps) => {
 		setSavedProfile(parsedData);
 	};
 
+	const loadProfileBinStorage = () => {
+		const currentBinItem = window.localStorage.getItem("profileBin");
+		let parsedData: UserState[] = [];
+		if (currentBinItem) parsedData = JSON.parse(currentBinItem);
+		setProfileBin(parsedData);
+	};
+
 	useEffect(() => {
 		checkSavedProfile(savedProfile, peopleState);
 	}, [savedProfile]);
@@ -144,13 +188,16 @@ export const PeopleProvider = ({ children }: PeopleProviderProps) => {
 		isLoading,
 		savedProfile,
 		peopleState,
+		profileBin,
 		page,
 		getPeopleLists,
-		updatePage,
 		savePeopleProfile,
 		unSavedProfile,
 		LoadAndFetch,
 		loadLocalProfile,
+		removeFromProfileBin,
+		restoreDeletedProfile,
+		loadProfileBinStorage,
 	};
 
 	return <PeopleContext.Provider value={contextValue}>{children}</PeopleContext.Provider>;

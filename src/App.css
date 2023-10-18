@@ -44,10 +44,10 @@ body {
 	background: linear-gradient(
 			to bottom,
 			rgb(255, 255, 255, 0.698),
-			rgba(255, 255, 255, 0.998),
+			rgba(255, 255, 255, 0.798),
 			rgba(255, 255, 255, 0.996),
 			rgba(255, 255, 255, 0.996),
-			rgba(255, 255, 255, 0.996),
+			rgba(255, 255, 255, 0.698),
 			rgba(255, 255, 255, 0.098)
 		),
 		url("/images/background/paper-texture.jpg");

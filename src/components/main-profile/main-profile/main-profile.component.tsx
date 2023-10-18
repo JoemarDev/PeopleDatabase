@@ -5,7 +5,13 @@ import MainProfileBasicInfo from "../main-profile-basic-info/main-profile-basic-
 import MainProfileHeader from "../main-profile-header/main-profile-header.component";
 import MainProfileInfo from "../main-profile-info/main-profile-info.component";
 import MainProfileContactInformation from "../main-profile-contact-information/main-profile-contact-information.component";
-const MainProfile: React.FC<{ closeProfile: () => void; data: UserState }> = ({ closeProfile, data }) => {
+
+interface MainProfileProps {
+	closeProfile: () => void;
+	data: UserState;
+}
+
+const MainProfile: React.FC<MainProfileProps> = ({ closeProfile, data }) => {
 	const { name, picture, isSaved, registered, dob, location, email, cell, phone } = data;
 	const [isClosing, setClosing] = useState(false);
 

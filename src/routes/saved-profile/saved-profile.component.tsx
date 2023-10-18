@@ -13,12 +13,10 @@ const SavedProfile = () => {
 
 	return (
 		<>
-			<div
-				className="main-wrapper"
-				style={{ minHeight: "80vh" }}>
+			<div className="main-wrapper">
 				<div className="flex items-center justify-between mb-5">
 					<div className="flex items-center gap-2">
-						<h2 className="text-2xl dark:text-white">Browse Favorite</h2>
+						<h2 className="text-2xl dark:text-white">Browse Saved Profile</h2>
 					</div>
 				</div>
 

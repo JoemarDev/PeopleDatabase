@@ -31,4 +31,5 @@ export const userDefaultState: UserState = {
 		large: "",
 	},
 	isSaved: false,
+	expiration: null,
 };

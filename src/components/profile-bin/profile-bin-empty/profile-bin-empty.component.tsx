@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-
-const EmptySavedPeopleLists = () => {
+const ProfileBinEmpty = () => {
 	return (
 		<>
 			<div
@@ -12,13 +11,14 @@ const EmptySavedPeopleLists = () => {
 						src="/images/icons/empty.svg"
 						alt=""
 					/>
-					<h2 className="max-md:text-md text-xl   text-blue-500 font-semibold mb-10 dark:text-white/50">
-						Oh Oh! Look You Have No Saved Profile
+					<h2 className="max-md:text-md text-xl  text-blue-500 font-semibold mb-10 dark:text-white/50">
+						Your Profile Bin Is Empty <br /> And Everything Looks Good!
 					</h2>
+
 					<Link
 						to={"/"}
 						className="border-4 border-blue-500/50 dark:border-blue-500 rounded-full px-10 py-2 text-blue-500 dark:text-blue-300">
-						Browse Profile
+						Go Home
 					</Link>
 				</div>
 			</div>
@@ -26,4 +26,4 @@ const EmptySavedPeopleLists = () => {
 	);
 };
 
-export default EmptySavedPeopleLists;
+export default ProfileBinEmpty;

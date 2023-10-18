@@ -1,10 +1,11 @@
 import { FormatNumber } from "../../../utils/others/contact-number-format.utils";
 
-const MainProfileContactInformation: React.FC<{
+interface MainProfileContactInformationProps {
 	email: string;
 	cell: string;
 	phone: string;
-}> = ({ email, cell, phone }) => {
+}
+const MainProfileContactInformation: React.FC<MainProfileContactInformationProps> = ({ email, cell, phone }) => {
 	return (
 		<>
 			<div>

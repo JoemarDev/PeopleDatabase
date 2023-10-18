@@ -8,13 +8,15 @@ const SavePeopleLists = () => {
 
 	if (savedProfile.length === 0) return <EmptySavedPeopleLists />;
 	return (
-		<div className="grid grid-cols-3 max-lg:grid-cols-1 max-xl:grid-cols-2 gap-4">
-			{savedProfile.map((item, index) => (
-				<ProfileCard
-					info={item}
-					key={index}
-				/>
-			))}
+		<div style={{ minHeight: "50vh" }}>
+			<div className="grid grid-cols-3 max-lg:grid-cols-1 max-xl:grid-cols-2 gap-4">
+				{savedProfile.map((item, index) => (
+					<ProfileCard
+						info={item}
+						key={index}
+					/>
+				))}
+			</div>
 		</div>
 	);
 };

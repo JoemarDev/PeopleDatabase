@@ -1,6 +1,9 @@
 import "./profile-gender.style.css";
 
-const ProfileGender: React.FC<{ gender: string }> = ({ gender }) => {
+interface ProfileGenderProps {
+	gender: string;
+}
+const ProfileGender: React.FC<ProfileGenderProps> = ({ gender }) => {
 	return (
 		<>
 			{gender === "female" && (

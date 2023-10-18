@@ -41,4 +41,5 @@ export interface UserState {
 	cell: string;
 	picture: Picture;
 	isSaved: boolean;
+	expiration: Date | null;
 }

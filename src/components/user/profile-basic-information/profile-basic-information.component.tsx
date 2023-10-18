@@ -1,6 +1,10 @@
 import { PersonalInformation } from "../../../utils/types/user/User.type";
 
-const ProfileBasicInformation: React.FC<{ name: PersonalInformation }> = ({ name }) => {
+interface ProfileBasicInformationProps {
+	name: PersonalInformation;
+}
+
+const ProfileBasicInformation: React.FC<ProfileBasicInformationProps> = ({ name }) => {
 	const { title, first, last } = name;
 
 	return (

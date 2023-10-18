@@ -1,10 +1,12 @@
 import { PersonalInformation, Picture } from "../../../utils/types/user/User.type";
 
-const MainProfileInfo: React.FC<{ picture: Picture; name: PersonalInformation; isSaved?: boolean | null }> = ({
-	picture,
-	name,
-	isSaved,
-}) => {
+interface MainProfileInfoProps {
+	picture: Picture;
+	name: PersonalInformation;
+	isSaved?: boolean;
+}
+
+const MainProfileInfo: React.FC<MainProfileInfoProps> = ({ picture, name, isSaved }) => {
 	const { last, first, title } = name;
 	const { large } = picture;
 	return (

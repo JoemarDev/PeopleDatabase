@@ -1,4 +1,8 @@
-const MainProfileHeader: React.FC<{ close: () => void }> = ({ close }) => {
+interface MainProfileHeaderProps {
+	close: () => void;
+}
+
+const MainProfileHeader: React.FC<MainProfileHeaderProps> = ({ close }) => {
 	return (
 		<div className="flex items-center justify-between max-sm:mb-5">
 			<div className="flex items-center gap-2 ">
