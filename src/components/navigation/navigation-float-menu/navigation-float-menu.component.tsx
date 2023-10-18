@@ -1,9 +1,8 @@
 import { useContext } from "react";
-
 import { Link } from "react-router-dom";
-import NavigationThemeOption from "../navigation-theme-option/navigation-theme-option.component";
 import { PeopleContext } from "../../../services/userAPI/user.context";
 
+import NavigationThemeOption from "../navigation-theme-option/navigation-theme-option.component";
 interface NavigationFloatMenuProps {
 	close: () => void;
 }

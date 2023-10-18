@@ -1,4 +1,6 @@
-![alt text](https://people-database-one.vercel.app/images/brand/logo.png)
+<p align="center">
+  <img src="https://people-database-one.vercel.app/images/brand/logo.png" alt="alt text">
+</p>
 
 ### Screen Shot of the project
 
