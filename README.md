@@ -2,7 +2,7 @@
 
 # Screen Shot of the project
 
-![alt text](https://people-database-one.vercel.app/images/screenshot.png)
+![alt text](https://raw.githubusercontent.com/JoemarDev/PeopleDatabase/main/public/images/screenshot.png)
 
 # People Database
 

@@ -15,26 +15,8 @@ export const userDefaultState: UserState = {
 		city: "",
 		state: "",
 		country: "",
-		postcode: "",
-		coordinates: {
-			latitude: "",
-			longitude: "",
-		},
-		timezone: {
-			offset: "",
-			description: "",
-		},
 	},
 	email: "",
-	login: {
-		uuid: "",
-		username: "",
-		password: "",
-		salt: "",
-		md5: "",
-		sha1: "",
-		sha256: "",
-	},
 	dob: {
 		date: "",
 		age: 0,
@@ -45,15 +27,8 @@ export const userDefaultState: UserState = {
 	},
 	phone: "",
 	cell: "",
-	id: {
-		name: "",
-		value: "",
-	},
 	picture: {
 		large: "",
-		medium: "",
-		thumbnail: "",
 	},
-	nat: "",
 	isSaved: false,
 };
