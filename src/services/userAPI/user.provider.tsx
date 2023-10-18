@@ -177,7 +177,17 @@ export const PeopleProvider = ({ children }: PeopleProviderProps) => {
 		const currentBinItem = window.localStorage.getItem("profileBin");
 		let parsedData: UserState[] = [];
 		if (currentBinItem) parsedData = JSON.parse(currentBinItem);
-		setProfileBin(parsedData);
+
+		const filterData = parsedData.filter((x) => {
+			const { expiration } = x;
+			if (expiration) {
+				const currentTime = new Date().getTime();
+				const expirationTime = new Date(expiration).getTime();
+				if (expirationTime > currentTime) return x;
+			}
+		});
+
+		setProfileBin(filterData);
 	};
 
 	useEffect(() => {

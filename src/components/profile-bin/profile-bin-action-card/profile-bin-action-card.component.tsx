@@ -11,7 +11,7 @@ const ProfileBinActionCard: React.FC<ProfileBinActionCardProps> = ({ info }) => 
 	const [percentage, setPercentage] = useState(0);
 	const [timer, setTimer] = useState("00:00");
 
-	const { removeFromProfileBin, restoreDeletedProfile } = useContext(PeopleContext);
+	const { removeFromProfileBin, restoreDeletedProfile, loadProfileBinStorage } = useContext(PeopleContext);
 
 	useEffect(() => {
 		if (expiration === null) return;
@@ -32,7 +32,8 @@ const ProfileBinActionCard: React.FC<ProfileBinActionCardProps> = ({ info }) => 
 			setTimer(formattedTime);
 
 			if (calculatedPercentage >= 100) {
-				removeFromProfileBin(info);
+				// Loop all profile bin storage and remove all expired data
+				loadProfileBinStorage();
 			}
 		}, 1000);
 
